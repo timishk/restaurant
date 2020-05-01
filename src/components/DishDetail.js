@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
-import {Card ,CardBody, CardImg,CardText, CardTitle} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody,
+    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+    import {Link} from 'react-router-dom';
 
 class Detail extends Component
 {
@@ -53,7 +55,7 @@ class Detail extends Component
             return(
                 
                     <h1>COMMENTS</h1>,
-                this.props.dish.comments.map((dis)=>{
+                this.props.comments.map((dis)=>{
                     return(
                        
                       
@@ -77,6 +79,16 @@ class Detail extends Component
         
         return(
             <div className="container">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>{this.props.dish.name}</h3>
+                        <hr />
+                    </div>                
+                </div>
                  <div className="row">
                  <div className="col-12 col-md-5 m-1">
                 {this.renderDish()}
