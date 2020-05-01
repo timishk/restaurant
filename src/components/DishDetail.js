@@ -28,6 +28,19 @@ class Detail extends Component
             )
         }
     }
+    outputComm(){
+        if(this.props.dish==null)
+        {return(
+            <div></div>
+        );
+        }
+        else
+        {
+            return(
+                <h1>COMMENTS</h1>
+            )
+        }
+    }
     renderComment()
     { if(this.props.dish==null)
         {return(
@@ -36,12 +49,14 @@ class Detail extends Component
         }
         else
         {
+            const p=1;
             return(
                 
+                    <h1>COMMENTS</h1>,
                 this.props.dish.comments.map((dis)=>{
                     return(
                        
-                       
+                      
                            <div>
                                 
                                <li>
@@ -50,9 +65,11 @@ class Detail extends Component
                                </li>
                                </div>
                         
-                    )
+                    );
             })
+            
         )
+       
         }
     }
 
@@ -66,10 +83,13 @@ class Detail extends Component
                 </div>
                
                 <div className="col-12 col-md-5 m-1">
+                  
+                   
                     <card>
-                       
+                {this.outputComm()} 
                 {this.renderComment()}
                 </card>
+    
                 </div>
              
           
