@@ -30,19 +30,7 @@ class Detail extends Component
             )
         }
     }
-    outputComm(){
-        if(this.props.dish==null)
-        {return(
-            <div></div>
-        );
-        }
-        else
-        {
-            return(
-                <h1>COMMENTS</h1>
-            )
-        }
-    }
+   
     renderComment()
     { if(this.props.dish==null)
         {return(
@@ -51,26 +39,27 @@ class Detail extends Component
         }
         else
         {
-            const p=1;
+            const comm=this.props.comments.map((dis)=>{
+                return(
+                   
+                  
+                       <div>
+                            
+                           <li>
+                           <p>{dis.comment}</p>
+                           <p>{dis.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(dis.date)))}</p>
+                           </li>
+                           </div>
+                    
+                );
+        })
             return(
+                <div>
+                   <h1>COMMENTS</h1>
+                   {comm}
                 
-                    <h1>COMMENTS</h1>,
-                this.props.comments.map((dis)=>{
-                    return(
-                       
-                      
-                           <div>
-                                
-                               <li>
-                               <p>{dis.comment}</p>
-                               <p>{dis.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(dis.date)))}</p>
-                               </li>
-                               </div>
-                        
-                    );
-            })
-            
-        )
+                   </div>
+        );
        
         }
     }
@@ -98,7 +87,7 @@ class Detail extends Component
                   
                    
                     <card>
-                {this.outputComm()} 
+                
                 {this.renderComment()}
                 </card>
     
