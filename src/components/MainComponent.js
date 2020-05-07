@@ -1,6 +1,7 @@
 import React ,{Component} from 'react';
 import Menu from './MenuComponent';
 import Detail from './DishDetail';
+
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
@@ -8,6 +9,7 @@ import Contact from './ContactusComponent';
 import About from './AboutComponent';
 import { Switch, Route, Redirect ,withRouter} from 'react-router-dom';
 import {connect} from 'react-redux'
+
 
 const mapStateToProps =state=>{
   return {
@@ -59,6 +61,7 @@ class Main extends Component {
               <Route path='/menu/:dishId' component={Dishid} />
               <Route exact path='/contactus' component={Contact} />
               <Route exact path='/info' component={Aboutus} />
+            
               <Redirect to="/home" />
           </Switch>
         

@@ -5,11 +5,7 @@ import Detail from './DishDetail';
 import {Link} from 'react-router-dom';
 class Menu extends Component
 {
-   
-
-   
-   
-    render(){
+   render(){
         const menu = this.props.dishes.map((dish) => {
             return (
               <div  className="col-md-5 m-1">
