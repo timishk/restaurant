@@ -4,7 +4,7 @@ import { Card, CardImg, CardText, CardBody,
     import {Link} from 'react-router-dom';
 import { LocalForm, Control ,Errors
 } from 'react-redux-form';
-
+import Loading from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -27,8 +27,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
         handleSubmit(values) {
             this.toggleModal();
-            console.log('Current State is: ' + JSON.stringify(values));
-            alert('Current State is: ' + JSON.stringify(values));
+            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
             
         }
  
@@ -58,7 +57,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                          </div>
                          <div className='form-group'>
                          <Label>Your name</Label>
-                         <Control.text model='.username' id='username' name='username' className="form-control" 
+                         <Control.text model='.author' id='author' name='author' className="form-control" 
                          validators={{
                              required,maxLength:maxLength(15),minLength:minLength(3)
                          }}
@@ -66,7 +65,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                          />
                         <Errors 
                         className="text-danger"
-                        model=".username"
+                        model=".author"
                         show="touched"
                         messages={{
                             required: 'Required',
@@ -97,13 +96,33 @@ const minLength = (len) => (val) => val && (val.length >= len);
 {
     constructor(props){
         super(props);
-        this.viewModal=this.viewModal.bind(this);
+       
     }
   
 
     renderDish()
+    {   if(this.props.isLoading){
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        )
+    }
+    else if(this.props.errMess)
     {
-        if(this.props.dish==null)
+        return (
+            <div className="container">
+                <div className="row">
+                <h4>{this.props.errMess}</h4>
+                </div>
+            </div>
+        )
+    }
+    
+
+        else if(this.props.dish==null)
         {return(
             <div></div>
         );
@@ -137,7 +156,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 return(
                    
                   
-                       <div>
+                       <div key={dis.id}>
                             
                            <li>
                            <p>{dis.comment}</p>
@@ -151,19 +170,14 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div>
                    <h1>COMMENTS</h1>
                    {comm}
-                   <CommentForm />
+                   <CommentForm dishId={this.props.dish.id} addComment={this.props.addComment}/>
                    </div>
         );
        
         }
     }
 
-    viewModal=()=>{
-        console.log("hi");
-        return(
-            <CommentForm />
-        )
-    }
+  
 
     render(){
         
@@ -188,12 +202,12 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div className="col-12 col-md-5 m-1">
                   
                    
-                    <card>
+                    
                 
                 {this.renderComment()}
             
             
-                </card>
+                
                
                 </div>
              

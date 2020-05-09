@@ -2,29 +2,53 @@ import React,{Component} from 'react';
 import { Card, CardImg, CardText, CardBody,CardImgOverlay,
     CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Detail from './DishDetail';
+import Loading from './LoadingComponent';
 import {Link} from 'react-router-dom';
-class Menu extends Component
+ const Menu =(props)=>
 {
-   render(){
-        const menu = this.props.dishes.map((dish) => {
+  
+     
+    
+        if(props.dishes.isLoading){
             return (
-              <div  className="col-md-5 m-1">
-                <Link to ={`/menu/${dish.id}`}>
-                <Card key={dish.id}
-                 >
-                  
-                      <CardImg src={dish.image} alt={dish.name} />
-                      <CardImgOverlay>
-                          <CardTitle>{dish.name}</CardTitle>
-                      </CardImgOverlay>
-                  
+                <div className="container">
+                    <div className="row">
+                        <Loading />
+                    </div>
+                </div>
+            )
+        }
+        else if(props.dishes.errMess)
+        {
+            return (
+                <div className="container">
+                    <div className="row">
+                    <h4>{props.dishes.errMess}</h4>
+                    </div>
+                </div>
+            )
+        }
+        else if(props.dishes.dishes!=null)
+        {
+            const menu = props.dishes.dishes.map((dish) => {
+                return (
+                  <div key={dish.id} className="col-md-5 m-1">
+                    <Link to ={`/menu/${dish.id}`}>
+                    <Card key={dish.id}
+                     >
+                      
+                          <CardImg src={dish.image} alt={dish.name} />
+                          <CardImgOverlay>
+                              <CardTitle>{dish.name}</CardTitle>
+                          </CardImgOverlay>
+                      
+                     
+                      </Card>
+                      </Link>
+                  </div>
                  
-                  </Card>
-                  </Link>
-              </div>
-             
-            );
-        });
+                );
+            });
         return(
             <div className="container">
                 <div className="row">
