@@ -3,22 +3,17 @@ import {Card, CardBody, CardTitle,CardText,CardImg,CardSubtitle} from 'reactstra
 import Loading from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl'
 import { FadeTransform } from 'react-animation-components';
-function RenderCard({item,dishesLoading,dishesErrMess,promosLoading,promosErrMess})
-{    if(dishesLoading||promosLoading){
+function RenderCard({item,ErrMess,isLoading})
+{    if(isLoading){
     return(
         <Loading />
     )
 }
-else if (dishesErrMess)
+else if (ErrMess)
     return(
-       <h4>{dishesErrMess}</h4>
+       <h4>{ErrMess}</h4>
     )
-     else if(promosErrMess)
-    {
-        return(
-           <h4>{promosErrMess}</h4> 
-        )
-    }
+    
     else
     return(
         <div>
@@ -48,14 +43,14 @@ function Home(props)
             <div className="row">
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.dish} dishesLoading={props.dishesLoading} dishesErrMess={props.dishesErrMess}
+                    <RenderCard item={props.dish} isLoading={props.dishesLoading} ErrMess={props.dishesErrMess}
                     />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promotion} promosLoading={props.promosLoading} promosErrMess={props.promosErrMess}/>
+                    <RenderCard item={props.promotion} isLoading={props.promosLoading} ErrMess={props.promosErrMess}/>
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader} isLoading={props.leadersLoading} ErrMess={props.leadersErrMess} />
                 </div>
             </div>
         </div>
