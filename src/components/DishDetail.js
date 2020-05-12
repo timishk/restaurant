@@ -6,7 +6,7 @@ import { LocalForm, Control ,Errors
 } from 'react-redux-form';
 import Loading from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
-
+import {FadeTransform, Fade, Stagger} from 'react-animation-components'
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -132,6 +132,12 @@ const minLength = (len) => (val) => val && (val.length >= len);
         {
             return(
                 <div>
+                   
+                <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
                 <CardImg top src={baseUrl+this.props.dish.image} alt={this.props.dish.name} />
                 <CardBody>
@@ -140,6 +146,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 </CardBody>
                 
             </Card>
+            </FadeTransform>
             </div>
             )
         }
@@ -163,31 +170,27 @@ const minLength = (len) => (val) => val && (val.length >= len);
         );
         }
         else
-        {
-            const comm=this.props.comments.map((dis)=>{
-                return(
-                   
-                  
-                       <div key={dis.id}>
-                            
-                           <li>
-                           <p>{dis.comment}</p>
-                           <p>{dis.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(dis.date)))}</p>
-                           </li>
-                           </div>
-                    
-                );
-        })
-            return(
-                <div>
-                   <h1>COMMENTS</h1>
-                   {comm}
-                   <CommentForm dishId={this.props.dish.id} postComment={this.props.postComment}/>
-                   </div>
-        );
+        {return(
+            <div>
+            <h1>COMMENTS</h1>
+            <Stagger in>
+                        {this.props.comments.map((comment) => {
+                            return (
+                                <Fade in>
+                                <li key={comment.id}>
+                                <p>{comment.comment}</p>
+                                <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                                </li>
+                                </Fade>
+                            );
+                        })}
+                        </Stagger>
+    <CommentForm dishId={this.props.dish.id} postComment={this.props.postComment}/>
+       </div>
+            
        
-        }}
-    }
+        )}
+    }}
 
   
 
@@ -196,7 +199,8 @@ const minLength = (len) => (val) => val && (val.length >= len);
         return(
            
             <div className="container">
-                <div className="row">
+               {this.props.dish!=null?
+                  <div className="row">
                     <Breadcrumb>
                         <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
@@ -204,8 +208,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     <div className="col-12">
                         <h3>{this.props.dish.name}</h3>
                         <hr />
-                    </div>                
+                    </div>  
+                         
                 </div>
+                 :<div></div>    }
                  <div className="row">
                  <div className="col-12 col-md-5 m-1">
                 {this.renderDish()}
