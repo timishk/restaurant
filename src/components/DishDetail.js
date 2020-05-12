@@ -28,7 +28,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
         handleSubmit(values) {
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
             
         }
  
@@ -182,7 +182,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div>
                    <h1>COMMENTS</h1>
                    {comm}
-                   <CommentForm dishId={this.props.dish.id} addComment={this.props.addComment}/>
+                   <CommentForm dishId={this.props.dish.id} postComment={this.props.postComment}/>
                    </div>
         );
        
