@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody,CardImgOverlay,
 import Detail from './DishDetail';
 import Loading from './LoadingComponent';
 import {Link} from 'react-router-dom';
+import {baseUrl} from '../shared/baseUrl';
  const Menu =(props)=>
 {
   
@@ -37,7 +38,7 @@ import {Link} from 'react-router-dom';
                     <Card key={dish.id}
                      >
                       
-                          <CardImg src={dish.image} alt={dish.name} />
+                          <CardImg src={baseUrl+dish.image} alt={dish.name} />
                           <CardImgOverlay>
                               <CardTitle>{dish.name}</CardTitle>
                           </CardImgOverlay>

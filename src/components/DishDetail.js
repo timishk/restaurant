@@ -5,6 +5,7 @@ import { Card, CardImg, CardText, CardBody,
 import { LocalForm, Control ,Errors
 } from 'react-redux-form';
 import Loading from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -132,7 +133,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
             return(
                 <div>
                 <Card>
-                <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
+                <CardImg top src={baseUrl+this.props.dish.image} alt={this.props.dish.name} />
                 <CardBody>
                   <CardTitle>{this.props.dish.name}</CardTitle>
                   <CardText>{this.props.dish.description}</CardText>
@@ -145,7 +146,18 @@ const minLength = (len) => (val) => val && (val.length >= len);
     }
    
     renderComment()
-    { if(this.props.dish==null)
+    { if(this.props.commentsErrMess)
+        {
+            return (
+                <div className="container">
+                    <div className="row">
+                    <h4>{this.props.commentsErrMess}</h4>
+                    </div>
+                </div>
+            )
+        }
+        else{
+        if(this.props.dish==null)
         {return(
             <div></div>
         );
@@ -174,7 +186,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                    </div>
         );
        
-        }
+        }}
     }
 
   
